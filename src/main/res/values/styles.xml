@@ -1,0 +1,119 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccentBackground">@color/accent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorRuleListItemBackground">@color/rule_list_item_dark</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorAccentBackground">@color/accent_300</item>
+        <item name="colorRuleListItemBackground">@android:color/white</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppTheme.Light.LaunchScreen">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="android:elevation" tools:targetApi="lollipop">4dp</item>
+        <item name="theme">@style/ToolbarTheme</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="iconTint">@android:color/white</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">?android:listDivider</item>
+    </style>
+
+    <style name="TextSubhead">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextCaption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="CreateRuleOption">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="CreateRuleOptionIcon">
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_width">36dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:tint">?android:colorForeground</item>
+    </style>
+
+    <style name="CreateRuleOptionTitle">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="CreateRuleOptionDescription">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="DisabledRuleName">
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+
+    <style name="EnabledRuleName">
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Option">
+        <item name="android:focusable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Option.Switch">
+        <item name="android:textAppearance">@style/OptionLabel</item>
+    </style>
+
+    <style name="OptionLabel">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <declare-styleable name="KeywordSpan">
+        <attr name="android:colorBackground"/>
+        <attr name="android:colorForeground"/>
+    </declare-styleable>
+
+    <style name="KeywordSpan">
+        <item name="android:colorBackground">?colorAccentBackground</item>
+        <item name="android:colorForeground">?android:textColorPrimary</item>
+    </style>
+
+</resources>

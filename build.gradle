@@ -1,0 +1,148 @@
+buildscript {
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+repositories {
+    google()
+    jcenter()
+}
+
+configurations {
+    ktlint
+}
+
+def database_version = 9
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "me.camsteffen.polite"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 62
+        versionName "1.4.7"
+        resConfigs "en", "de"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "int", "DATABASE_VERSION", "$database_version"
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas".toString())
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+        }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    def dagger_version = '2.24'
+    def lifecycle_version = '2.1.0'
+    def nav_version = '2.1.0'
+    def room_version = '2.2.0'
+    def work_version = '2.2.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation "androidx.preference:preference-ktx:1.1.0"
+    implementation "com.google.android.material:material:1.0.0"
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
+
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.mockk:mockk:1.9.3'
+    testImplementation 'com.google.truth:truth:1.0'
+    androidTestImplementation 'com.google.truth:truth:1.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    testImplementation('org.threeten:threetenbp:1.4.0') {
+        exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+    }
+
+    ktlint "com.pinterest:ktlint:0.35.0"
+}
+
+task ktlint(type: JavaExec, group: 'verification') {
+    description = 'Check Kotlin code style.'
+    classpath = configurations.ktlint
+    main = 'com.pinterest.ktlint.Main'
+    args '--android', 'src/**/*.kt'
+}
+
+task ktlintFormat(type: JavaExec, group: 'formatting') {
+    description = 'Fix Kotlin code style deviations.'
+    classpath = configurations.ktlint
+    main = 'com.pinterest.ktlint.Main'
+    args '--android', '-F', 'src/**/*.kt'
+}
+
+check.dependsOn ktlint
